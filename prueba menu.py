@@ -1,6 +1,7 @@
 from tkinter import *
 from functools import partial
-
+import socket
+from PIL import Image,ImageTk
 
 def mostrar(num):
     v1=Toplevel(v0)
@@ -103,9 +104,16 @@ def ejecutar(f):
 
 v0=Tk()
 v0.title("Pantalla de Inicio")
+v0.config(bg="snow")
 v0.geometry('500x500')
-
-#foto = PhotoImage(open('/home/Documentos/PyO/barco.jpg'))
+f20 = Frame(v0, width=775,height=250)
+f20.config(bg="snow")
+f20.config(bd=2)
+f20.config(relief="ridge")
+f20.pack(side="top")
+img = Image.open('barco.png')
+img = img.resize((50,50),Image.Resampling.LANCZOS)
+img = ImageTk.PhotoImage(img)
 
 b01=Button(v0, text='Crear Usuario', bg="green", command=lambda: ejecutar(mostrar(1)))
 b01.place(x=150,y=250)
