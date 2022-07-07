@@ -1,7 +1,7 @@
 from tkinter import *
 from functools import partial
 import socket
-from PIL import Image,ImageTk
+
 
 def mostrar(num):
     v1=Toplevel(v0)
@@ -72,8 +72,8 @@ def mostrar(num):
             listframe3.append(f3)
            
         tabla1 = []
-        alto1 = 8
-        ancho1 = 8
+        alto1 = 7
+        ancho1 = 7
         tiros = []
 
         def pulsar(a,b):
@@ -81,7 +81,7 @@ def mostrar(num):
                 tiros.append([a,b])
                 tabla1[a][b].config(relief = SUNKEN)
                 tabla1[a][b].config(text = ' ')
-                texto = consola.cget("text") + "[" + str(a) + "," + str(b) + "] - " 
+                texto = consola.cget("text") + "[" + str(b) + "," + str(a) + "] - " 
                 print(texto)
                 consola.config(text = texto)
 
@@ -91,7 +91,7 @@ def mostrar(num):
         for i in range(alto1):
             fila1 = []
             for j in range(ancho1):
-                boton = Button(listframe3[1], text = ' ', bg = "snow", command = partial(pulsar, i, j))
+                boton = Button(listframe3[1], text = ' ', bg = "lightblue", command = partial(pulsar, i, j))
                 boton.grid(column = i,row = j)
                 fila1.append(boton)
             tabla1.append(fila1)
@@ -100,11 +100,11 @@ def ocultar(ventana):
     ventana.destroy()
 
 def ejecutar(f):
-    v0.after(200,f)
+    v0.after(100,f)
 
 v0=Tk()
 v0.title("Pantalla de Inicio")
-v0.config(bg="snow")
+#v0.config(bg="snow")
 v0.geometry('500x500')
 f20 = Frame(v0, width=450,height=200)
 f20.config(bg="snow")
@@ -117,12 +117,11 @@ men_img.pack()
 
 b04 = Button(v0, text='Juego', command=lambda: ejecutar(mostrar(3)))
 b04.place(x=450,y=400)
-b01 = Button(v0, text="Crear Usuario", foreground = "#ff0000", command=lambda: ejecutar(mostrar(1)))
+b01 = Button(v0, text="Crear Usuario",  font=("Times", 11), foreground = "#ff0000", command=lambda: ejecutar(mostrar(1)))
 b01.place(x=150, y=350)
-b02 = Button(v0, text="Acceder al Usuario", foreground = "Steelblue", command=lambda: ejecutar(mostrar(2)))
+b02 = Button(v0, text="Acceder al Usuario", font=("Times", 11), foreground = "Steelblue", command=lambda: ejecutar(mostrar(2)))
 b02.place(x=150, y=400)
-b03 = Button(v0, text="Cerrar", foreground = "violet", command=lambda: ejecutar(ocultar(v0)))
+b03 = Button(v0, text="Cerrar", font=("Times", 11), foreground = "violet", command=lambda: ejecutar(ocultar(v0)))
 b03.place(x=150, y=450)
-
 
 v0.mainloop()
