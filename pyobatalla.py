@@ -1,6 +1,6 @@
 from tkinter import *
-import tabjuego
-import login
+import pyojuego
+#import pyologin
 
 
 class Menu:
@@ -9,7 +9,7 @@ class Menu:
         print("iniciando Menu")
         self.v0 = Tk()
         self.v0.title("Pantalla de Inicio")
-        #v0.config(bg="snow")
+        #self.v0.config(bg="snow")
         self.v0.geometry('500x500')
         f20 = Frame(self.v0, width=450,height=200)
         f20.config(bg="snow")
@@ -35,7 +35,7 @@ class Menu:
 
     def mostrar(self):
         self.v0.destroy()
-        self.v1 = tabjuego.Tablero()
+        self.v1 = pyojuego.Tablero()
 
 
 

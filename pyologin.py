@@ -4,7 +4,7 @@ from functools import partial
 class Login:
     def __init__(self):
 
-hola = Canvas(self.v1, width=300, height=210)
+    hola = Canvas(self.v1, width=300, height=210)
             hola.pack(expand=YES, fill=BOTH)
             b3 = Button(hola, text='Cerrar', bg="red", command=lambda: ejecutar(ocultar(self.v1)))
             b3.grid(row=1, column=1)
