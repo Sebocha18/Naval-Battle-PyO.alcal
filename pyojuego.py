@@ -26,8 +26,8 @@ class Tablero:
         f1.config(relief="ridge")
         f1.pack(side="top")
         f2 = Frame(self.v1, width=775, height=50)
-        texto = ""
-        self.consola = Label(f2, text=texto)
+        self.texto = ""
+        self.consola = Label(f2, text = self.texto)
         self.consola.pack()
         f2.config(bg="snow")
         f2.config(bd=2)
@@ -37,28 +37,28 @@ class Tablero:
         def pulsar(self, j, i):
             if [j, i] not in self.tiros:
                 self.tiros.append([i, j])
-                self.tabla1[j][i].config(relief=SUNKEN)
-                self.tabla1[j][i].config(text=' ')
-                texto = self.consola.cget("text") + "[" + str(j) + "," + str(i) + "] - "
-                print(texto)
-                self.consola.config(text=texto)
+                self.tabla1[j][i].config(relief = SUNKEN)
+                self.tabla1[j][i].config(text = ' ')
+                self.texto = self.consola.cget("text") + "[" + str(j) + "," + str(i) + "] - "
+                print(self.texto)
+                self.consola.config(text = self.texto)
             else:
                 print("Ya ejecutaste esta casilla")
                 
-        for l in range(3):
+        for n in range(3):
             f3 = Frame(f1, width=250, height=250)
-            f3.config(bg="lightblue")
-            f3.config(bd=1)
-            f3.config(relief="groove")
-            f3.pack(side="right")
+            f3.config(bg = "lightblue")
+            f3.config(bd = 1)
+            f3.config(relief = "groove")
+            f3.pack(side = "right")
             self.listframe3.append(f3)
             self.tabla1.append(self.fila1)
             
         for i in range(self.alto1):
             self.fila1 = []
             for j in range(self.ancho1):
-                boton = Button(self.listframe3[1], text=' ', bg = "lightblue", command=partial(pulsar, i, j))
-                boton.grid(column=i, row=j)
+                boton = Button(self.listframe3[1], text=' ', bg = "lightblue", command = partial(pulsar, i, j))
+                boton.grid(column = i, row = j)
                 self.fila1.append(boton)
             self.tabla1.append(self.fila1)
 
