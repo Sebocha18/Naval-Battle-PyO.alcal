@@ -7,50 +7,50 @@ largo = 5
 sentido = True
 
 def limpiar_tablero():
-    for i in tablero:
-        for j in i:
-            j['background'] = 'gray85'
+    for ii in tablero:
+        for jj in ii:
+            jj['background'] = 'gray85'
            
 def cambiar_sentido(e):
     global sentido
     sentido = not sentido
     limpiar_tablero()
 
-def apretar(i, j):
+def apretar(ii, jj):
     global largo
     if sentido:
-        for l in range(largo):
-            print(l)
-            tablero[i][j+l]['background'] = 'green'
-            tablero[i][j+l]['text'] = ' '
+        for ll in range(largo):
+            print(ll)
+            tablero[ii][jj+ll]['background'] = 'green'
+            tablero[ii][jj+ll]['text'] = ' '
     else:
-        for l in range(largo):
-            print(l)
-            tablero[i+l][j]['background'] = 'green'
-            tablero[i+l][j]['text'] = ' '
+        for ll in range(largo):
+            print(ll)
+            tablero[ii+ll][jj]['background'] = 'green'
+            tablero[ii+ll][jj]['text'] = ' '
    
-def on_enter(i, j, e):
+def on_enter(ii, jj, e):
     global largo
     if sentido:
-        for l in range(largo):
-            print(l)
-            tablero[i][j+l]['background'] = 'green'
+        for ll in range(largo):
+            print(ll)
+            tablero[ii][jj+ll]['background'] = 'green'
     else:
-        for l in range(largo):
-            print(l)
-            tablero[i+l][j]['background'] = 'green'
+        for ll in range(largo):
+            print(ll)
+            tablero[ii+ll][jj]['background'] = 'green'
    
 
-def on_leave(i, j, e):
+def on_leave(ii, jj, e):
     global largo
     if sentido:
-        for l in range(largo):
-            if tablero[i][j+l]['text'] != ' ':
-                tablero[i][j+l]['background'] = 'gray85'
+        for ll in range(largo):
+            if tablero[ii][jj+ll]['text'] != ' ':
+                tablero[ii][jj+ll]['background'] = 'gray85'
     else:
-        for l in range(largo):
-            if tablero[i+l][j]['text'] != ' ':
-                tablero[i+l][j]['background'] = 'gray85'
+        for ll in range(largo):
+            if tablero[ii+ll][jj]['text'] != ' ':
+                tablero[ii+ll][jj]['background'] = 'gray85'
                
 for i in range(8):
     lista = []
