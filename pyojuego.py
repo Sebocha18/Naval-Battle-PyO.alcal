@@ -3,6 +3,25 @@ from functools import partial
 
 
 class Tablero:
+    
+    campo1 = [["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],]
+    
+    campo2 = [["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","barco","barco","barco","barco","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],]
+    
     def __init__(self):
         self.tabla1 = []
         self.alto1 = 8
@@ -21,7 +40,7 @@ class Tablero:
         self.sentido = True
         hola = Canvas(self.v1, width=30, height=20)
         hola.pack(expand=YES, fill=BOTH)
-        f1 = Frame(self.v1, width=775, height=20)
+        f1 = Frame(self.v1, width=1575, height=820)
         f1.config(bg="lightblue")
         f1.config(bd=3)
         f1.config(relief="ridge")
@@ -35,10 +54,50 @@ class Tablero:
         f2.config(relief="ridge")
         f2.pack(side="top")
         
+        print("creando frames")
+        for f in range(2):
+            f3 = Frame(f1, width=1550, height=1000)
+            f3.config(bg = "lightblue")
+            f3.config(bd = 1)
+            f3.config(relief = "groove")
+            f3.pack(side = "right")
+            self.listframe3.append(f3)
+            
+        
+        print("tablero tiros")
+        for i in range(self.alto1):
+            self.fila1 = []
+            for j in range(self.ancho1):
+                boton = Button(self.listframe3[1], text=' ', bg = "lightblue", command = partial(self.pulsar, i, j))
+                boton.grid(column = i, row = j)
+                self.fila1.append(boton)
+            self.tabla1.append(self.fila1)
+            
+        print("tablero barcos")
+        for x in range(self.ancho1):
+            self.lista = []
+            for y in range(self.alto1):
+                boton18 = Button(self.listframe3[0], text = "", bg = "lightblue", command = partial(self.apretar, x,y))
+                boton18.bind("<Enter>", partial(self.on_enter, x, y))
+                boton18.bind("<Leave>", partial(self.on_leave, x, y))
+                boton18.bind("<Button-3>", partial(self.cambiar_sentido, x, y))
+                self.lista.append(boton18)
+                boton18.grid(column=y, row=x)
+            self.tablero.append(self.lista)
+        print("Iniciando ventana")
+        self.v1.mainloop()
+        
+        
     def pulsar(self, j, i):
+        print(self.campo2[j][i])
+        
         if [j, i] not in self.tiros:
-            self.tiros.append([i, j])
+            self.tiros.append([j, i])
+            print("tiro: " + str(j),str(i))
             self.tabla1[j][i].config(relief = SUNKEN)
+            if(self.campo2[j][i] == "barco"):
+                self.tabla1[j][i].config(bg="black")
+            
             self.tabla1[j][i].config(text = ' ')
             self.texto = self.consola.cget("text") + "[" + str(j) + "," + str(i) + "] - "
             print(self.texto)
@@ -46,79 +105,60 @@ class Tablero:
         else:
             print("Ya ejecutaste esta casilla")
     
-    def limpiar_tablero(self):
-        for x in self.tablero:
-            for y in x:
-                y['background'] = 'gray85'
+    def limpiar_tablero(self,x,y,e):
+        for a in self.tablero:
+            for b in a:
+                i=self.tablero.index(a)
+                j=a.index(b)
+                if(self.campo1[i][j] == "agua"):
+                    b['background'] = 'lightblue'
+        self.on_enter(x,y,e)
            
-    def cambiar_sentido(self, e):
+    def cambiar_sentido(self,x, y, e):
         self.sentido = not self.sentido
-        limpiar_tablero()
+        self.limpiar_tablero(x,y,e)
 
     def apretar(self, x, y):
-        if self.sentido:
-            for ll in range(self.largo):
-                print(ll)
-                self.tablero[x][y+ll]['background'] = 'green'
-                self.tablero[x][y+ll]['text'] = ' '
-        else:
-            for ll in range(self.largo):
-                print(ll)
-                self.tablero[x+ll][y]['background'] = 'green'
-                self.tablero[x+ll][y]['text'] = ' '
+        if self.largo>0:
+            self.campo1[x][y] = "barco"
+            if self.sentido:
+                for ll in range(self.largo):
+                    if(y+ll <= 7):
+                        self.tablero[x][y+ll]['background'] = 'green'
+                        self.tablero[x][y+ll]['text'] = ' '
+                        self.campo1[x][y+ll] = "barco"
+            else:
+                for ll in range(self.largo):
+                    if(x+ll <= 7):
+                        self.tablero[x+ll][y]['background'] = 'green'
+                        self.tablero[x+ll][y]['text'] = ' '
+                        self.campo1[x+ll][y] = "barco"
+            print(self.campo1)
+            self.largo-=1
        
     def on_enter(self, x, y, e):
         if self.sentido:
             for ll in range(self.largo):
-                print(ll)
-                self.tablero[x][y+ll]['background'] = 'green'
+                if(y+ll <= 7):
+                    self.tablero[x][y+ll]['background'] = 'green'
         else:
             for ll in range(self.largo):
-                print(ll)
-                self.tablero[x+ll][y]['background'] = 'green'
+                if(x+ll <= 7):
+                    self.tablero[x+ll][y]['background'] = 'green'
        
 
     def on_leave(self, x, y, e):
         if self.sentido:
             for ll in range(self.largo):
-                if self.tablero[x][y+ll]['text'] != ' ':
-                    self.tablero[x][y+ll]['background'] = 'gray85'
+                if(y+ll <= 7):
+                    if self.tablero[x][y+ll]['text'] != ' ':
+                        self.tablero[x][y+ll]['background'] = 'lightblue'
         else:
             for ll in range(self.largo):
-                if self.tablero[x+ll][y]['text'] != ' ':
-                    self.tablero[x+ll][y]['background'] = 'gray85'
+                if(x+ll <= 7):
+                    if self.tablero[x+ll][y]['text'] != ' ':
+                        self.tablero[x+ll][y]['background'] = 'lightblue'
         
-        for x in range(self.ancho1):
-            self.lista = []
-            for y in range(self.alto1):
-                boton18 = Button(self.listaframe3[0], text="", command=partial(apretar, x,y))
-                boton18.bind("<Enter>", partial(on_enter, x, y))
-                boton18.bind("<Leave>", partial(on_leave, x, y))
-                boton18.bind("<Button-3>", cambiar_sentido)
-                self.lista.append(boton)
-                boton18.grid(column=y, row=x)
-            self.tablero.append(self.lista)
-                
-        for f in range(3):
-            f3 = Frame(f1, width=250, height=250)
-            f3.config(bg = "lightblue")
-            f3.config(bd = 1)
-            f3.config(relief = "groove")
-            f3.pack(side = "right")
-            self.listframe3.append(f3)
-            self.tabla1.append(self.fila1)
-            
-        for i in range(self.alto1):
-            self.fila1 = []
-            for j in range(self.ancho1):
-                boton = Button(self.listframe3[1], text=' ', bg = "lightblue", command = partial(pulsar, i, j))
-                boton.grid(column = i, row = j)
-                self.fila1.append(boton)
-            self.tabla1.append(self.fila1)
-
-        print("....")
-        self.v1.mainloop()
-
 if __name__ == '__main__':
     t = Tablero()
     print("HOLA")
