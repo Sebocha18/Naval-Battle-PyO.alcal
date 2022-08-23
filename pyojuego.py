@@ -14,7 +14,7 @@ class Tablero:
               ["agua","agua","agua","agua","agua","agua","agua","agua"],]
     
     campo2 = [["agua","agua","agua","agua","agua","agua","agua","agua"],
-              ["agua","barco","barco","barco","barco","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
@@ -53,8 +53,9 @@ class Tablero:
         f2.config(bd=2)
         f2.config(relief="ridge")
         f2.pack(side="top")
-        
         print("creando frames")
+        
+        
         for f in range(2):
             f3 = Frame(f1, width=1550, height=1000)
             f3.config(bg = "lightblue")
@@ -62,18 +63,19 @@ class Tablero:
             f3.config(relief = "groove")
             f3.pack(side = "right")
             self.listframe3.append(f3)
-            
-        
         print("tablero tiros")
+        
+        
         for i in range(self.alto1):
             self.fila1 = []
             for j in range(self.ancho1):
                 boton = Button(self.listframe3[1], text=' ', bg = "lightblue", command = partial(self.pulsar, i, j))
-                boton.grid(column = i, row = j)
+                boton.grid(column = j, row = i)
                 self.fila1.append(boton)
             self.tabla1.append(self.fila1)
-            
         print("tablero barcos")
+        
+        
         for x in range(self.ancho1):
             self.lista = []
             for y in range(self.alto1):
@@ -90,14 +92,12 @@ class Tablero:
         
     def pulsar(self, j, i):
         print(self.campo2[j][i])
-        
         if [j, i] not in self.tiros:
             self.tiros.append([j, i])
             print("tiro: " + str(j),str(i))
             self.tabla1[j][i].config(relief = SUNKEN)
             if(self.campo2[j][i] == "barco"):
                 self.tabla1[j][i].config(bg="black")
-            
             self.tabla1[j][i].config(text = ' ')
             self.texto = self.consola.cget("text") + "[" + str(j) + "," + str(i) + "] - "
             print(self.texto)
