@@ -1,5 +1,7 @@
 from tkinter import *
 from functools import partial
+import json
+import socket
 
 
 class Tablero:
@@ -11,7 +13,7 @@ class Tablero:
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
-              ["agua","agua","agua","agua","agua","agua","agua","agua"],]
+              ["agua","agua","agua","agua","agua","agua","agua","agua"]]
     
     campo2 = [["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
@@ -20,7 +22,7 @@ class Tablero:
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
-              ["agua","agua","agua","agua","agua","agua","agua","agua"],]
+              ["agua","agua","agua","agua","agua","agua","agua","agua"]]
     
     def __init__(self):
         self.tabla1 = []
@@ -45,14 +47,14 @@ class Tablero:
         f1.config(bd=3)
         f1.config(relief="ridge")
         f1.pack(side="top")
-        f2 = Frame(self.v1, width=775, height=50)
+        self.f2 = Frame(self.v1, width=775, height=50)
         self.texto = ""
-        self.consola = Label(f2, text = self.texto)
+        self.consola = Label(self.f2, text = self.texto)
         self.consola.pack()
-        f2.config(bg="snow")
-        f2.config(bd=2)
-        f2.config(relief="ridge")
-        f2.pack(side="top")
+        self.f2.config(bg="snow")
+        self.f2.config(bd=2)
+        self.f2.config(relief="ridge")
+        self.f2.pack(side="top")
         print("creando frames")
         
         
@@ -63,13 +65,13 @@ class Tablero:
             f3.config(relief = "groove")
             f3.pack(side = "right")
             self.listframe3.append(f3)
-        print("tablero tiros")
+            print("tablero tiros")
         
         
         for i in range(self.alto1):
             self.fila1 = []
             for j in range(self.ancho1):
-                boton = Button(self.listframe3[1], text=' ', bg = "lightblue", command = partial(self.pulsar, i, j))
+                boton = Button(self.listframe3[0], text=' ', bg = "lightblue", command = partial(self.pulsar, i, j))
                 boton.grid(column = j, row = i)
                 self.fila1.append(boton)
             self.tabla1.append(self.fila1)
@@ -79,7 +81,7 @@ class Tablero:
         for x in range(self.ancho1):
             self.lista = []
             for y in range(self.alto1):
-                boton18 = Button(self.listframe3[0], text = "", bg = "lightblue", command = partial(self.apretar, x,y))
+                boton18 = Button(self.listframe3[1], text = "", bg = "lightblue", command = partial(self.apretar, x,y))
                 boton18.bind("<Enter>", partial(self.on_enter, x, y))
                 boton18.bind("<Leave>", partial(self.on_leave, x, y))
                 boton18.bind("<Button-3>", partial(self.cambiar_sentido, x, y))
@@ -89,7 +91,10 @@ class Tablero:
         print("Iniciando ventana")
         self.v1.mainloop()
         
-        
+    def transformar(self, campo1):
+        self.campo1 = tablero_str
+        tablero_str.json(type(tablero_str))
+    
     def pulsar(self, j, i):
         print(self.campo2[j][i])
         if [j, i] not in self.tiros:

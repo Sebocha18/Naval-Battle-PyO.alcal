@@ -1,6 +1,6 @@
 from tkinter import *
 import pyojuego
-#import pyologin
+import pyologin
 
 
 class Menu:
@@ -34,12 +34,10 @@ class Menu:
         self.v0.after(100, f)
 
     def mostrar(self):
-        self.v0.destroy()
-        self.v1 = pyojuego.Tablero()
-
-
+        if
+            self.v0.destroy()
+            self.v1 = pyojuego.Tablero()
 
 
 if __name__ == '__main__':
     m = Menu()
-

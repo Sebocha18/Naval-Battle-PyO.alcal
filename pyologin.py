@@ -1,105 +1,61 @@
 from tkinter import *
-from functools import partial
+import sqlite3
+import bcrypt
 
-class Login:
+
+def encriptar(password):
+    password = password.encode('utf-8')
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt(10))
+    return hashed.decode('utf-8')
+
+def chechPas(password, hashed):
+    if bcrypt.checkpw(password, hashed):
+        return True
+    else:
+        return False
+
+class Base:
     def __init__(self):
+        self.db = sqlite3.connect("usuarios.db")
+        self.c = self.db.cursor()
+        self.respuestas_login = ["login ok", "Contraseña incorrecta", "No existe usuario"]
+        self.respuestas_contrasenia = ["cambio ok", "error old passw"]
 
-    hola = Canvas(self.v1, width=300, height=210)
-            hola.pack(expand=YES, fill=BOTH)
-            b3 = Button(hola, text='Cerrar', bg="red", command=lambda: ejecutar(ocultar(self.v1)))
-            b3.grid(row=1, column=1)
-            texto1 = Label(self.v1, text="Nombre de Usuario", bg="white", anchor="center")
-            texto1.pack(fill=X)
-            self.cajaTexto01 = Entry(self.v1)
-            cajaTexto01.config(insertbackground="SteelBlue")
-            cajaTexto01.pack()
-            texto2 = Label(self.v1, text="Correo Electronico", bg="white", anchor="center")
-            texto2.pack(fill=X)
-            cajaTexto02 = Entry(self.v1)
-            cajaTexto02.config(insertbackground="SteelBlue")
-            cajaTexto02.pack()
-            texto3 = Label(v1, text="Contraseña de Usuario", bg="white", anchor="center")
-            texto3.pack(fill=X)
-            cajaTexto03 = Entry(v1)
-            cajaTexto03.config(fg="white")
-            cajaTexto03.pack()
-
-
-def textoCaja(self):
-    text18 = self.cajaTexto01.get()
-    text19 = cajaTexto02.get()
-    text20 = cajaTexto03.get()
-    print(cajaTexto01, cajaTexto02, cajaTexto03)
-    boton = Button(v1, text="Guardar", bg="green", command=textoCaja)
-    boton.pack()
-
-    def textoCaja(self):
-        text18 = self.cajaTexto01.get()
-        text19 = cajaTexto02.get()
-        text20 = cajaTexto03.get()
-        print(cajaTexto01, cajaTexto02, cajaTexto03)
-        boton = Button(v1, text="Guardar", bg="green", command=textoCaja)
-        boton.pack()
-        elif num == 2:
-        hola = Canvas(v1, width=300, height=210)
-        hola.pack(expand=YES, fill=BOTH)
-        b3 = Button(hola, text='Atras', bg="red", command=lambda: self.ejecutar(ocultar(v1)))
-        b3.grid(row=1, column=1)
-
-    elif num == 3:
-    hola = Canvas(v1, width=300, height=210)
-    hola.pack(expand=YES, fill=BOTH)
-    b3 = Button(hola, text='Atras', bg="red", command=lambda: self.ejecutar(ocultar(v1)))
-    b3.grid(row=1, column=1)
-    f1 = Frame(v1, width=775, height=320)
-    f1.config(bg="lightblue")
-    f1.config(bd=3)
-    f1.config(relief="ridge")
-    f1.pack(side="top")
-
-    f2 = Frame(v1, width=775, height=50)
-    texto = ""
-    consola = Label(f2, text=texto)
-    consola.pack()
-    f2.config(bg="snow")
-    f2.config(bd=2)
-    f2.config(relief="ridge")
-    f2.pack(side="top")
-
-    listframe3 = []
-    for l in range(3):
-        f3 = Frame(f1, width=250, height=250)
-        f3.config(bg="lightblue")
-        f3.config(bd=1)
-        f3.config(relief="groove")
-        f3.pack(side="right")
-        listframe3.append(f3)
-
-    tabla1 = []
-    alto1 = 7
-    ancho1 = 7
-    tiros = []
-
-    def pulsar(a, b):
-        if [a, b] not in tiros:
-            tiros.append([a, b])
-            tabla1[a][b].config(relief=SUNKEN)
-            tabla1[a][b].config(text=' ')
-            texto = consola.cget("text") + "[" + str(b) + "," + str(a) + "] - "
-            print(texto)
-            consola.config(text=texto)
-
+    def alta_usuario(self, nom, passw, nusr):
+        passw = encriptar(passw)
+        
+        if not self.existe_usuario(nusr):
+            self.c.execute(f'INSERT INTO USUARIOS (NUSUARIO, CONTRASENIA, NOMBRE) VALUES ("{nusr}", "{passw}", "{nom}");')
+            self.db.commit()
+            return 0
         else:
-            print("Ya ejecutaste esta casilla")
+            return 1
 
-    for i in range(alto1):
-        fila1 = []
-        for j in range(ancho1):
-            boton = Button(listframe3[1], text=' ', bg="lightblue", command=partial(pulsar, i, j))
-            boton.grid(column=i, row=j)
-            fila1.append(boton)
-        tabla1.append(fila1)
+    def login(self, passw, nusr):
+        self.c.execute(f'SELECT * FROM USUARIOS WHERE NUSUARIO ="{nusr}";')
+        resp = self.c.fetchall()
+        p = resp[0][2].strip("'(),")
+        password = bytes(p, 'utf-8')
+        if resp:
+            if chechPas(bytes(passw, 'utf-8'), password):
+                return 0
+            else:
+                return 1
+        else:
+            return 2
 
+    def existe_usuario(self, nusr):
+        self.c.execute(f'SELECT * FROM USUARIOS WHERE NUSUARIO ="{nusr}";')
+        resp = self.c.fetchall()
+        if resp:
+            return True
+        return False
 
-def ocultar(ventana):
-    ventana.destroy()
+    def cambiar_contrasenia(self, old_passw, new_passw, nusr):
+        if self.login(old_passw, nusr) == 0:
+            new_passw = encriptar(new_passw)
+            self.c.execute(f'UPDATE USUARIOS SET CONTRASENIA = {new_passw} WHERE NUSUARIO ="{nusr}";')
+            self.db.commit()
+        else:
+            return 1
+        return 0

@@ -5,6 +5,7 @@ listensocket = socket.socket() #Creates an instance of socket
 Port = 8766 #Port to host server on
 maxConnections = 999
 IP = socket.gethostname() #IP address of local machine
+MiIP = socket.getsockname()
 listensocket.bind(('',Port))
 listensocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 #Starts server
@@ -29,3 +30,5 @@ while running:
     message = clientsocket.recv(1024).decode() #Gets the incomming message
     if not message == "":
         funciones_dic[message]()
+        
+print(MiIP)
