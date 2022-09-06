@@ -1,19 +1,18 @@
 from tkinter import *
-#Imports library
 import socket
 
-#Creates instance of 'Socket'
-s = socket.socket()
+#Crea nueva instancia del socket
+servidor = socket.socket()
 
 def conectar():
-    hostname = texto2.get()
-    port = 8765 #Server Port
-    s.connect((hostname,port)) #Connects to server
+    nombre_host = texto2.get()
+    puerto = 8765 #Server Puerto
+    servidor.connect((nombre_host,puerto)) #Conecta al servidor
     print("Conectado al servidor")
 
 def enviar():
-    x = texto.get() #Gets the message to be sent
-    s.send(x.encode()) #Encodes and sends message (x)
+    mensaje = texto.get() #obtiene mensaje para ser enviado
+    servidor.send(mensaje.encode()) #Codifica y envía mensajes
     print("Mensaje enviado")
     
 ventana = Tk()

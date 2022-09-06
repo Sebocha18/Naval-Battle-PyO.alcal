@@ -1,21 +1,20 @@
-#Imports modules
 import socket
 
-listensocket = socket.socket() #Creates an instance of socket
-Port = 8768 #Port to host server on
+servidor_abierto = socket.socket() #Crea una nueva instancia en el modulo
+Port = 8768 #Puerto al servidor host en
 maxConnections = 999
-nombre = socket.gethostname() #IP address of local machine
+nombre = socket.gethostname() #IP de la computadora local
 MiIP = socket.gethostbyname(nombre + ".local" )
-print(MiIP)
 #MiIP = socket.getsockname()
-listensocket.bind(('',Port))
-listensocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-#Starts server
-listensocket.listen(maxConnections)
-print("Server comenzado en: " + MiIP + " con el port " + str(Port))
-
-#Accepts the incomming connection
-(clientsocket, address) = listensocket.accept()
+servidor_abierto.bind(('',Port))
+servidor_abierto.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+#Comienza el servidor
+servidor_abierto.listen(maxConnections)
+print("Server comenzado en: " + MiIP + " en el puerto " + str(Port))
+#Acepta una nueva conexion
+(clientsocket, address) = servidor_abierto.accept()
+data = "Hello Server!";
+clientSocket.send(data.encode());
 print("Nueva conexion de: ")
 
 running = True
@@ -29,8 +28,6 @@ def funcion2():
 funciones_dic = {'f1':funcion1, 'f2':funcion2}
 
 while running:
-    message = clientsocket.recv(1024).decode() #Gets the incomming message
+    message = clientsocket.recv(1024).decode() #Recibe el nuevo mensaje
     if not message == "":
         funciones_dic[message]()
-        
-print(MiIP)

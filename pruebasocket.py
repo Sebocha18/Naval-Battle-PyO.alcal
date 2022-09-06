@@ -23,4 +23,4 @@ data = stream_socket.recv(10)
 print(data)
  
 print('socket closed')
-stream_socket.close()<zz
+stream_socket.close()
