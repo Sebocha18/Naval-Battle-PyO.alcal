@@ -90,7 +90,6 @@ class Tablero:
             self.tablero.append(self.lista)
         print("Iniciando ventana")
         self.v1.mainloop()
-        
     def transformar(self, campo1):
         self.campo1 = tablero_str
         tablero_str.json(type(tablero_str))
