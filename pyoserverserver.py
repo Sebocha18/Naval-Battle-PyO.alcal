@@ -1,33 +1,35 @@
 import socket
+import json
 
-servidor_abierto = socket.socket() #Crea una nueva instancia en el modulo
-Port = 8768 #Puerto al servidor host en
-maxConnections = 999
-nombre = socket.gethostname() #IP de la computadora local
-MiIP = socket.gethostbyname(nombre + ".local" )
-#MiIP = socket.getsockname()
-servidor_abierto.bind(('',Port))
-servidor_abierto.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-#Comienza el servidor
-servidor_abierto.listen(maxConnections)
-print("Server comenzado en: " + MiIP + " en el puerto " + str(Port))
-#Acepta una nueva conexion
-(clientsocket, address) = servidor_abierto.accept()
-data = "Hello Server!";
-clientSocket.send(data.encode());
-print("Nueva conexion de: ")
-
-running = True
-
-def funcion1():
-    print("funcion1")
-
-def funcion2():
-    print("funcion2")
+class Servidor:
+    def __init__(self):       
+        self.Port = 8765 #Puerto al servidor host en
+        self.maxConnections = 999
+        self.nombre = socket.gethostname() #IP de la computadora local
+        self.MiIP = socket.gethostbyname(self.nombre + ".local" )
+        self.clientsocket = None
+        self.address = None
+        self.data = "Hello Server!";
+        self.running = True        
     
-funciones_dic = {'f1':funcion1, 'f2':funcion2}
-
-while running:
-    message = clientsocket.recv(1024).decode() #Recibe el nuevo mensaje
-    if not message == "":
-        funciones_dic[message]()
+    def enviar(self):
+        self.clientsocket.send(self.data.encode());
+        pass
+    
+    def recibir(self):
+        while self.running:
+            message = self.clientsocket.recv(1024).decode() #Recibe el nuevo mensaje
+            if not message == "":
+                print(message)
+                print(json.loads(message)[0])
+                self.running = False
+        self.running = True
+    
+    def abrir_conexion(self):
+        servidor_abierto = socket.socket()
+        servidor_abierto.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        servidor_abierto.bind(('',self.Port))        
+        servidor_abierto.listen(self.maxConnections)
+        print("Server comenzado en: " + self.MiIP + " en el puerto " + str(self.Port))
+        (self.clientsocket, self.address) = servidor_abierto.accept()
+        print(self.clientsocket.getsockname())
