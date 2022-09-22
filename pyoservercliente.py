@@ -6,7 +6,7 @@ servidor = socket.socket()
 
 def conectar():
     nombre_host = texto2.get()
-    puerto = 8765 #Server Puerto
+    puerto = 8766 #Server Puerto
     servidor.connect((nombre_host,puerto)) #Conecta al servidor
     print("Conectado al servidor")
 

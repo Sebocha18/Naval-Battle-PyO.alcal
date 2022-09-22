@@ -39,7 +39,7 @@ class Login:
         f2 = tkinter.Frame(self.ventana)
         f2.grid(column=0, row=1)
 
-        etiqueta = tkinter.Label(f1, text = "¡Welcome to Roluby Clash!", font = "Arial 30", bg = "pink")
+        etiqueta = tkinter.Label(f1, text = "¡Bienvenido a Batalla Naval!", font = "Arial 30", bg = "pink")
         etiqueta.pack()
 
         self.cajaNombre = EntryWithPlaceholder(f1,"Ingrese su nombre")

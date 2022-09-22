@@ -34,7 +34,6 @@ class Menu:
         self.v0.after(100, f)
 
     def mostrar(self):
-        if
             self.v0.destroy()
             self.v1 = pyojuego.Tablero()
 

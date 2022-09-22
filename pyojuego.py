@@ -67,6 +67,7 @@ class Tablero:
             self.listframe3.append(f3)
             print("tablero tiros")
         
+    
         
         for i in range(self.alto1):
             self.fila1 = []
