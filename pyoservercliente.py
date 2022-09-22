@@ -1,27 +1,32 @@
 from tkinter import *
 import socket
+import json
 
-#Crea nueva instancia del socket
-servidor = socket.socket()
+class Cliente:
+    def __init__(self, ip = '192.168.68.200', port = 8765):
+        self.servidor = socket.socket()
+        self.nombre_host = ip
+        self.puerto = port
+        self.data = [["agua","agua","barco","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"],
+              ["agua","agua","agua","agua","agua","agua","agua","agua"]]
+            
 
-def conectar():
-    nombre_host = texto2.get()
-    puerto = 8766 #Server Puerto
-    servidor.connect((nombre_host,puerto)) #Conecta al servidor
-    print("Conectado al servidor")
+    def conectar(self):
+        self.servidor.connect((self.nombre_host, self.puerto)) #Conecta al servidor
+        print("Conectado al servidor")
 
-def enviar():
-    mensaje = texto.get() #obtiene mensaje para ser enviado
-    servidor.send(mensaje.encode()) #Codifica y envía mensajes
-    print("Mensaje enviado")
-    
-ventana = Tk()
-texto = Entry(ventana)
-boton = Button(ventana, text="Enviar", command=enviar)
-texto2 = Entry(ventana)
-boton2 = Button(ventana, text="Conectar", command=conectar)
-texto2.pack()
-boton2.pack()
-texto.pack()
-boton.pack()
-ventana.mainloop()
+    def enviar(self, mensaje = ""):
+        mensaje = self.data
+        mensJson = json.dumps(mensaje)
+        self.servidor.send(mensJson.encode()) #Codifica y envía mensajes
+        print("Mensaje enviado")
+        
+    def recibir(self):
+        data = self.servidor.recv(1024).decode()
+        print(data)
