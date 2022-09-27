@@ -2,7 +2,8 @@ import socket
 import json
 
 class Servidor:
-    def __init__(self):       
+    def __init__(self):
+        print("server creado")
         self.Port = 8765 #Puerto al servidor host en
         self.maxConnections = 999
         self.nombre = socket.gethostname() #IP de la computadora local
