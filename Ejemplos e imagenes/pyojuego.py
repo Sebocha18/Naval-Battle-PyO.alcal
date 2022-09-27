@@ -4,7 +4,7 @@ import json
 import socket
 
 
-    
+class Tablero:
     
     campo1 = [["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
