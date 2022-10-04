@@ -3,10 +3,10 @@ import socket
 import json
 
 class Cliente:
-    def __init__(self, ip = '192.168.68.200', port = 8765):
+    def __init__(self, ):
         self.servidor = socket.socket()
-        self.nombre_host = ip
-        self.puerto = port
+        self.nombre_host = ""
+        self.puerto = ""
         self.data = [["agua","agua","barco","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
@@ -17,7 +17,9 @@ class Cliente:
               ["agua","agua","agua","agua","agua","agua","agua","agua"]]
             
 
-    def conectar(self):
+    def conectar(self,ip = '192.168.68.200', port = 8765):
+        self.nombre_host = ip
+        self.puerto = port
         self.servidor.connect((self.nombre_host, self.puerto)) #Conecta al servidor
         print("Conectado al servidor")
 

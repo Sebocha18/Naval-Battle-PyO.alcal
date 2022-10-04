@@ -2,10 +2,11 @@ from tkinter import *
 from functools import partial
 import json
 import socket
+from pyoservercliente import Cliente
+from pyoserverserver import Servidor
 
-
-    
-    
+class Tablero:
+   
     campo1 = [["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
@@ -24,7 +25,14 @@ import socket
               ["agua","agua","agua","agua","agua","agua","agua","agua"],
               ["agua","agua","agua","agua","agua","agua","agua","agua"]]
     
-    def __init__(self):
+    def __init__(self, server):
+        if server:
+            self.jugador = Servidor()
+            self.jugador.abrir_conexion()
+            print(self.jugador.MiIP)
+        else:
+            self.jugador = Cliente()
+            print("cliente")
         self.tabla1 = []
         self.alto1 = 8
         self.ancho1 = 8
@@ -40,8 +48,7 @@ import socket
         self.largo = 5
         self.lista = []
         self.sentido = True
-        hola = Canvas(self.v1, width=30, height=20)
-        hola.pack(expand=YES, fill=BOTH)
+       
         f1 = Frame(self.v1, width=1575, height=820)
         f1.config(bg="lightblue")
         f1.config(bd=3)
@@ -163,7 +170,10 @@ import socket
                 if(x+ll <= 7):
                     if self.tablero[x+ll][y]['text'] != ' ':
                         self.tablero[x+ll][y]['background'] = 'lightblue'
+
+
+        
         
 if __name__ == '__main__':
-    t = Tablero()
+    t = Tablero(False)
     print("HOLA")

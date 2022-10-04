@@ -11,6 +11,7 @@ class Servidor:
         self.clientsocket = None
         self.address = None
         self.data = "Hello Server!";
+        print(self.MiIP)
         self.running = True        
     
     def enviar(self):
@@ -34,3 +35,6 @@ class Servidor:
         print("Server comenzado en: " + self.MiIP + " en el puerto " + str(self.Port))
         (self.clientsocket, self.address) = servidor_abierto.accept()
         print(self.clientsocket.getsockname())
+        
+if __name__ == "__main__":
+    s = Servidor()
