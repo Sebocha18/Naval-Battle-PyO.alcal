@@ -41,9 +41,10 @@ class Tablero:
         self.fila1 = []
         print("Iniciando Tablero")
         self.v1 = Tk()
+        #self.v1.config 
         self.v1.title('Batalla Naval')
-        self.v1.geometry('700x350')
         self.v1.config(cursor="dotbox")
+        self.v1.resizable(0,0)
         self.tablero = []
         self.largo = 5
         self.lista = []

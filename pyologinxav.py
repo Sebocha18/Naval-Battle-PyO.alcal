@@ -3,25 +3,25 @@ import pyobd_utilsxav
 import json
 import random
 from functools import partial
-from pyojuego import Tablero
+from pyobatalla import Menu
 
 class ScreenLogin:
 
     def __init__(self):
         self.ventana = Tk()
-        self.ventana.title("Login Usuario")
+        self.ventana.title("Inicia o Crea tu Usuario")
         mainFrame = Frame(self.ventana)
         mainFrame.pack()
-        titulo = Label(mainFrame, text="Login de Usuario", font=("Arial 24"))
+        titulo = Label(mainFrame, text="Login de Usuario", font=("Arial 24"), bg ="lightblue")
         titulo.grid(column=0, row=0, padx=10, pady=10, columnspan=2)
-        mainFrame.config(width=400, height=200) #bg= "#1AA1EE")
-        iniciarSesion = Button(mainFrame, command=self.verificar_uc, text="Iniciar sesión")
+        mainFrame.config(width=400, height=200, bg= "lightblue")
+        iniciarSesion = Button(mainFrame, command=self.verificar_uc, text="Iniciar sesión", bg = "steelblue")
         iniciarSesion.grid(column=1, row=3, ipadx=5, ipady=5, padx=10, pady=10)
-        registroUsuario = Button(mainFrame, command=self.registrar_usuario, text="Registrar")
+        registroUsuario = Button(mainFrame, command=self.registrar_usuario, text="Registrar", bg = "steelblue")
         registroUsuario.grid(column=0, row=3, ipadx=5, ipady=5, padx=10, pady=10)
-        nombreLabel = Label(mainFrame, text="Nombre: ")
+        nombreLabel = Label(mainFrame, text="Nombre: ", bg = "lightblue")
         nombreLabel.grid(column=0, row=1)
-        contrasenaLabel = Label(mainFrame, text="Contraseña: ")
+        contrasenaLabel = Label(mainFrame, text="Contraseña: ", bg = "lightblue")
         contrasenaLabel.grid(column=0, row=2)
         self.nombreUsuario= StringVar()
         nombreEntry = Entry(mainFrame, textvariable=self.nombreUsuario)
@@ -30,6 +30,7 @@ class ScreenLogin:
         contrasenaEntry = Entry(mainFrame, textvariable=self.contrasenaUsuario, show="*")
         contrasenaEntry.grid(column=1, row=2)
         self.base = pyobd_utilsxav.Base()
+        self.ventana.mainloop()
     
     def registrar_usuario(self):
         nombre= self.nombreUsuario.get()
@@ -41,12 +42,15 @@ class ScreenLogin:
             print("Faltan datos")
     
     def verificar_uc(self):
-        nombre= self.nombreUsuario.get()
-        contrasena= self.contrasenaUsuario.get()
+        nombre = self.nombreUsuario.get()
+        contrasena = self.contrasenaUsuario.get()
         if nombre and contrasena:
             resp = self.base.iniciar_sesion(nombre, contrasena)
             print(self.base.respuestas_login[resp])
             self.ventana.state(newstate='withdraw')
-            sig= Tablero()
+            sig = Menu()
         else:
             print("Faltan datos")
+            
+if __name__ == '__main__':
+    s = ScreenLogin()
