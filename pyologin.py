@@ -1,9 +1,10 @@
 from tkinter import *
-import pyobd_utilsxav
+import pyobasededatos
 import json
 import random
 from functools import partial
-from pyobatalla import Menu
+from pyomenulocal import Menu
+#from pyomenu import Menu
 
 class ScreenLogin:
 
@@ -29,7 +30,7 @@ class ScreenLogin:
         self.contrasenaUsuario= StringVar()
         contrasenaEntry = Entry(mainFrame, textvariable=self.contrasenaUsuario, show="*")
         contrasenaEntry.grid(column=1, row=2)
-        self.base = pyobd_utilsxav.Base()
+        self.base = pyobasededatos.Base()
         self.ventana.mainloop()
     
     def registrar_usuario(self):

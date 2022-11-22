@@ -50,12 +50,12 @@ class Tablero:
         self.lista = []
         self.sentido = True
        
-        f1 = Frame(self.v1, width=1575, height=820)
+        f1 = Frame(self.v1, width=700, height=300)
         f1.config(bg="lightblue")
         f1.config(bd=3)
         f1.config(relief="ridge")
         f1.pack(side="top")
-        self.f2 = Frame(self.v1, width=775, height=50)
+        self.f2 = Frame(self.v1, width=700, height=50)
         self.texto = ""
         self.consola = Label(self.f2, text = self.texto)
         self.consola.pack()
@@ -67,16 +67,16 @@ class Tablero:
         
         
         for f in range(2):
-            f3 = Frame(f1, width=1550, height=1000)
+            f3 = Frame(f1, width=700, height=300)
             f3.config(bg = "lightblue")
             f3.config(bd = 1)
             f3.config(relief = "groove")
             f3.pack(side = "right")
             self.listframe3.append(f3)
-            print("tablero tiros")
+        print("tablero tiros")
         
     
-        
+        '''
         for i in range(self.alto1):
             self.fila1 = []
             for j in range(self.ancho1):
@@ -86,7 +86,7 @@ class Tablero:
             self.tabla1.append(self.fila1)
         print("tablero barcos")
         
-        
+        '''
         for x in range(self.ancho1):
             self.lista = []
             for y in range(self.alto1):
@@ -98,7 +98,10 @@ class Tablero:
                 boton18.grid(column=y, row=x)
             self.tablero.append(self.lista)
         print("Iniciando ventana")
+        
+        
         self.v1.mainloop()
+        
     def transformar(self, campo1):
         self.campo1 = tablero_str
         tablero_str.json(type(tablero_str))
@@ -173,7 +176,7 @@ class Tablero:
                         self.tablero[x+ll][y]['background'] = 'lightblue'
 
 
-        
+
         
 if __name__ == '__main__':
     t = Tablero(False)
