@@ -22,7 +22,7 @@ class Tablero:
         self.texto = ""
         self.largo = 5
         self.sentido = True #herramienta para cambiar el sentido en la colocacion de los barcos
-        self.ventana.title("Ordena tus barcos y dispara") #titulo a la ventana
+        self.ventana.title("Ordena tus barcos") #titulo a la ventana
         self.ventana.geometry("700x300") #proporciones de la ventana
         self.ventana.config(bg = "SteelBlue4")
         self.ventana.resizable(0, 0) #ventana estatil
@@ -34,6 +34,25 @@ class Tablero:
         self.frametablero.grid(column = 0, row = 0)
         self.filatab = []
         self.tabtab = []
+        self.tab = Tk()
+        self.tab.title("Disparale al enemigo") #titulo a la ventana
+        self.tab.geometry("700x300") #proporciones de la ventana
+        self.tab.config(bg = "SteelBlue4")
+        self.tab.resizable(0, 0) #ventana estatil
+        self.frametiros = Frame(self.tab, width = 700, height = 300)
+        self.frametiros.grid(column = 0, row = 0)
+        self.frameconsola = Frame(self.tab, width = 700, height = 300)
+        self.frameconsola.grid(column = 0, row = 1)
+        self.consola = Label(self.frameconsola, text = self.texto)
+        self.consola.grid(column = 0, row = 12)
+        
+        for i in range(8):
+            self.filatab = []
+            for j in range(8):
+                botontir = Button(self.frametiros, text=' ', bg = "SteelBlue3", command = partial(self.pulsar, i, j))
+                botontir.grid(column = j, row = i)
+                self.filatab.append(botontir)
+            self.tabtab.append(self.filatab)
         
         for x in range(8):
             self.filatablero = []
@@ -43,10 +62,15 @@ class Tablero:
                 boton.bind("<Leave>", partial(self.on_leave, x, y))
                 boton.bind("<Button-3>", partial(self.cambiar_sentido, x, y))
                 self.filatablero.append(boton)
-                boton.grid(column=y, row=x)
+                boton.grid(column = y, row = x)
             self.tablero.append(self.filatablero)
-        self.botonsiguiente = Button(self.framemenu, text = "Enviar Barcos", bg = "dark olive green", command = self.tirar())
+            
+        self.botonsiguiente = Button(self.framemenu, text = "Ocultar Ventana", bg = "dark olive green", command = self.ventana.iconify)
         self.botonsiguiente.grid(column = 0, row = 12)
+        self.botontiros = Button(self.framemenu, text = "Enviar Barcos", bg = "dark olive green")
+        self.botontiros.grid(column = 0, row = 10)
+        
+        self.tab.mainloop()
         self.ventana.mainloop() #mostrar ventana
             
     def apretar(self, x, y):
@@ -64,7 +88,6 @@ class Tablero:
                         self.tablero[x+i][y]['background'] = 'green'
                         self.tablero[x+i][y]['text'] = ' '
                         self.campo1[x+i][y] = "barco"
-        print(self.campo1)
         self.largo-=1
         
     def limpiar_tablero(self,x,y,e):
@@ -80,25 +103,6 @@ class Tablero:
     def cambiar_sentido(self,x, y, e):
         self.sentido = not self.sentido
         self.limpiar_tablero(x,y,e)
-
-
-    def apretar(self, x, y):
-        if self.largo>0:
-            self.campo1[x][y] = "barco"
-            if self.sentido:
-                for i in range(self.largo):
-                    if(y+i <= 7):
-                        self.tablero[x][y+i]['background'] = 'green'
-                        self.tablero[x][y+i]['text'] = ' '
-                        self.campo1[x][y+i] = "barco"
-            else:
-                for i in range(self.largo):
-                    if(x+i <= 7):
-                        self.tablero[x+i][y]['background'] = 'green'
-                        self.tablero[x+i][y]['text'] = ' '
-                        self.campo1[x+i][y] = "barco"
-            print(self.campo1)
-            self.largo-=1
        
        
     def on_enter(self, x, y, e):
@@ -124,19 +128,8 @@ class Tablero:
                     if self.tablero[x+i][y]['text'] != ' ':
                         self.tablero[x+i][y]['background'] = 'SteelBlue3'
 
-    def tirar(self):
-        self.ventana.destroy()
-        self.tab = Tk()
-        self.consola = Label(self.tab, text = self.texto)
-        self.consola.pack(side = "bottom")
-        self.tab.mainloop()
-        for i in range(8):
-            self.filatab = []
-            for j in range(8):
-                botontir = Button(self.tab, text=' ', bg = "SteelBlue3", command = partial(self.pulsar, i, j))
-                botontir.grid(column = j, row = i)
-                self.filatab.append(botontir)
-            self.tabtab.append(self.filatab)
+    '''def tirar(self):
+        '''
             
     def pulsar(self, j, i):
         print(self.campo1[j][i])
@@ -145,7 +138,7 @@ class Tablero:
             print("tiro: " + str(j),str(i))
             self.tabtab[j][i].config(relief = SUNKEN)
             if(self.campo1[j][i] == "barco"):
-                self.tabla1[j][i].config(bg="black")
+                self.tabtab[j][i].config(bg="black")
             self.tabtab[j][i].config(text = ' ')
             self.texto = self.consola.cget("text") + "[" + str(j) + "," + str(i) + "] - "
             print(self.texto)

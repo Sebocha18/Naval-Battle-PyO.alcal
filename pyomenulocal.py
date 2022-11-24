@@ -1,5 +1,5 @@
 from tkinter import *
-import pyojuego
+import pyojuegolocal
 from functools import partial
 
 class Menu:
@@ -25,9 +25,9 @@ class Menu:
         self.f4.grid(column=0, row=0)
         self.v0.resizable(0, 0)
 
-        b03 = Button(self.f4, text="Crear Partida", font=("Times", 12), foreground = "gray85", bg="gray30", command=partial(self.mostrar, True))
-        b03.grid(column=0, row=0)
-        b04 = Button(self.f4, text="Conectar", font=("Times", 12), foreground = "gray85", bg="gray30", command=partial(self.mostrar,False))
+        '''b03 = Button(self.f4, text="Crear Partida", font=("Times", 12), foreground = "gray85", bg="gray30", command=partial(self.mostrar, True))
+        b03.grid(column=0, row=0)'''
+        b04 = Button(self.f4, text="Jugar", font=("Times", 12), foreground = "gray85", bg="gray30", command=partial(self.mostrar,False))
         b04.grid(column=0, row=1)
         self.v0.mainloop()
 

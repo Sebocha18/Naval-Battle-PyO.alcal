@@ -76,7 +76,6 @@ class Tablero:
         print("tablero tiros")
         
     
-        '''
         for i in range(self.alto1):
             self.fila1 = []
             for j in range(self.ancho1):
@@ -86,7 +85,7 @@ class Tablero:
             self.tabla1.append(self.fila1)
         print("tablero barcos")
         
-        '''
+        
         for x in range(self.ancho1):
             self.lista = []
             for y in range(self.alto1):
