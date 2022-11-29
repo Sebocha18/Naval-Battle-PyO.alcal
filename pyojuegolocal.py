@@ -67,8 +67,6 @@ class Tablero:
             
         self.botonsiguiente = Button(self.framemenu, text = "Ocultar Ventana", bg = "dark olive green", command = self.ventana.iconify)
         self.botonsiguiente.grid(column = 0, row = 12)
-        self.botontiros = Button(self.framemenu, text = "Enviar Barcos", bg = "dark olive green")
-        self.botontiros.grid(column = 0, row = 10)
         
         self.tab.mainloop()
         self.ventana.mainloop() #mostrar ventana
@@ -89,6 +87,7 @@ class Tablero:
                         self.tablero[x+i][y]['text'] = ' '
                         self.campo1[x+i][y] = "barco"
         self.largo-=1
+        print("Te quedan colocar {0} barcos".format(self.largo))
         
     def limpiar_tablero(self,x,y,e):
         for a in self.tablero:
@@ -135,16 +134,18 @@ class Tablero:
         print(self.campo1[j][i])
         if [j, i] not in self.tiros:
             self.tiros.append([j, i])
-            print("tiro: " + str(j),str(i))
+            print("Tu tiro fue a la cordenada: " + str(j) + "," + str(i))
             self.tabtab[j][i].config(relief = SUNKEN)
             if(self.campo1[j][i] == "barco"):
                 self.tabtab[j][i].config(bg="black")
             self.tabtab[j][i].config(text = ' ')
             self.texto = self.consola.cget("text") + "[" + str(j) + "," + str(i) + "] - "
-            print(self.texto)
             self.consola.config(text = self.texto)
         else:
             print("Ya ejecutaste esta casilla")
-                        
+                
+    '''def hundir():
+        '''
+        
 if __name__ == '__main__':
     t = Tablero()

@@ -11,6 +11,7 @@ class ScreenLogin:
     def __init__(self):
         self.ventana = Tk()
         self.ventana.title("Inicia o Crea tu Usuario")
+        self.ventana.resizable(0, 0)
         mainFrame = Frame(self.ventana)
         mainFrame.pack()
         titulo = Label(mainFrame, text="Login de Usuario", font=("Arial 24"), bg ="lightblue")
