@@ -5,7 +5,7 @@ from functools import partial
 class Menu:
     
     def __init__(self):
-        print("iniciando Menu")
+        print("iniciando Menú")
         self.v0 = Tk()
         self.v0.title("Pantalla de Inicio")
         self.v0.config(bg="snow")

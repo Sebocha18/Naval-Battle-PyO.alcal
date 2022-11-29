@@ -40,11 +40,11 @@ class Tablero:
         self.tab.config(bg = "SteelBlue4")
         self.tab.resizable(0, 0) #ventana estatil
         self.frametiros = Frame(self.tab, width = 700, height = 300)
-        self.frametiros.grid(column = 0, row = 0)
-        self.frameconsola = Frame(self.tab, width = 700, height = 300)
-        self.frameconsola.grid(column = 0, row = 1)
+        self.frametiros.pack(side = "top")
+        self.frameconsola = Frame(self.tab, width = 700, height = 100)
+        self.frameconsola.pack(side = "bottom")
         self.consola = Label(self.frameconsola, text = self.texto)
-        self.consola.grid(column = 0, row = 12)
+        self.consola.pack(side = "bottom")
         
         for i in range(8):
             self.filatab = []
@@ -88,6 +88,8 @@ class Tablero:
                         self.campo1[x+i][y] = "barco"
         self.largo-=1
         print("Te quedan colocar {0} barcos".format(self.largo))
+        if self.largo == 0:
+            print("Has colocado todos los barcos. Apreta en 'Ocultar Ventana' ahora ¡llama a un amigo para bombardearte!")
         
     def limpiar_tablero(self,x,y,e):
         for a in self.tablero:
@@ -131,10 +133,10 @@ class Tablero:
         '''
             
     def pulsar(self, j, i):
-        print(self.campo1[j][i])
         if [j, i] not in self.tiros:
             self.tiros.append([j, i])
-            print("Tu tiro fue a la cordenada: " + str(j) + "," + str(i))
+            print("-----")
+            print("Tu tiro fue a la cordenada: " + str(j) + "," + str(i) + " y resulto ser: " + self.campo1[j][i])
             self.tabtab[j][i].config(relief = SUNKEN)
             if(self.campo1[j][i] == "barco"):
                 self.tabtab[j][i].config(bg="black")
@@ -143,6 +145,7 @@ class Tablero:
             self.consola.config(text = self.texto)
         else:
             print("Ya ejecutaste esta casilla")
+        print(self.campo1)
                 
     '''def hundir():
         '''
