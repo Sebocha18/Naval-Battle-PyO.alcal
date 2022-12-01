@@ -1,5 +1,6 @@
 from tkinter import *
 import pyobasededatos
+from tkinter import messagebox as MessageBox
 import json
 import random
 from functools import partial
@@ -50,9 +51,15 @@ class ScreenLogin:
             resp = self.base.iniciar_sesion(nombre, contrasena)
             print(self.base.respuestas_login[resp])
             self.ventana.state(newstate='withdraw')
-            sig = Menu()
+            if resp == 0:
+                MessageBox.showinfo("Sesion Iniciada", "El Usuario se a iniciado de forma exitosa.")
+                sig = Menu()
+            if resp == 1:
+                MessageBox.showerror("Error #1", "La contraseña del usuario es incorrecta.")
+                sig2 = ScreenLogin()
         else:
-            print("Faltan datos")
-            
+            MessageBox.showerror("Error #2", "No se a encontrado el usuario en la Base de Datos.")
+            sig2 = ScreenLogin()
+
 if __name__ == '__main__':
     s = ScreenLogin()

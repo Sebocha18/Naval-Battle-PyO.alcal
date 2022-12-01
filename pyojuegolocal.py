@@ -45,7 +45,6 @@ class Tablero:
         self.frameconsola.pack(side = "bottom")
         self.consola = Label(self.frameconsola, text = self.texto)
         self.consola.pack(side = "bottom")
-        
         for i in range(8):
             self.filatab = []
             for j in range(8):
@@ -64,10 +63,8 @@ class Tablero:
                 self.filatablero.append(boton)
                 boton.grid(column = y, row = x)
             self.tablero.append(self.filatablero)
-            
         self.botonsiguiente = Button(self.framemenu, text = "Ocultar Ventana", bg = "dark olive green", command = self.ventana.iconify)
         self.botonsiguiente.grid(column = 0, row = 12)
-        
         self.tab.mainloop()
         self.ventana.mainloop() #mostrar ventana
             
@@ -100,7 +97,6 @@ class Tablero:
                     b['background'] = 'SteelBlue3'
         self.on_enter(x,y,e)
        
-       
     def cambiar_sentido(self,x, y, e):
         self.sentido = not self.sentido
         self.limpiar_tablero(x,y,e)
@@ -116,7 +112,6 @@ class Tablero:
                 if(x+i <= 7):
                     self.tablero[x+i][y]['background'] = 'green'
        
-
     def on_leave(self, x, y, e):
         if self.sentido:
             for i in range(self.largo):
@@ -128,9 +123,6 @@ class Tablero:
                 if(x+i <= 7):
                     if self.tablero[x+i][y]['text'] != ' ':
                         self.tablero[x+i][y]['background'] = 'SteelBlue3'
-
-    '''def tirar(self):
-        '''
             
     def pulsar(self, j, i):
         if [j, i] not in self.tiros:
@@ -147,8 +139,6 @@ class Tablero:
             print("Ya ejecutaste esta casilla")
         print(self.campo1)
                 
-    '''def hundir():
-        '''
-        
+
 if __name__ == '__main__':
     t = Tablero()

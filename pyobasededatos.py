@@ -6,7 +6,7 @@ class Base:
         self.conexion = sqlite3.connect("BDJuego.db")
         self.cursor = self.conexion.cursor()
         self.respuestas_registrousuario = ["El registro de usuario ha sido exitoso", "Ya existe usuario"]
-        self.respuestas_login =  ["Inicio de sesión OK", "La contraseña es incorrecta", "El usuario no existe"]
+        self.respuestas_login =  ["Inicio de sesión correcto", "La contraseña es incorrecta", "El usuario no existe"]
     
     def encriptar(self, contrasena):
         contrasena = contrasena.encode('utf-8')
